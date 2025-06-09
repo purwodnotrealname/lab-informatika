@@ -52,8 +52,28 @@ class AuthController extends Controller
         return redirect()->route('login.view');
     }
 
-    public function login()
+       public function login()
     {
         return view('auth.login');
+    }
+
+    public function loginSubmit(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->intended('/showcase');
+        }
+
+        return back()->withErrors([
+            'email' => 'Invalid credentials.',
+        ])->withInput($request->only('email'));
+
     }
 }
