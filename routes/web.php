@@ -12,3 +12,4 @@ Route::controller(AuthController::class)->group(function () {
    Route::post('/register', 'store')->name('register.store');
    ROute::get('/login', 'login')->name('login.view');
 });
+
