@@ -17,12 +17,13 @@ Route::controller(AuthController::class)->group(function () {
    Route::get('/register', 'register')->name('register.view');
    Route::post('/register', 'store')->name('register.store');
 
+});
+
 Route::controller(LoginController::class)->group(function () {
     Route::get('/login', 'login')->name('login.view');
     Route::post('/login', 'attemptlogin')->name('login.attempt');
     Route::get('/logout', 'attemptlogout')->name('attemptlogout')->middleware('auth');
 });
-
 
 Route::get('/showcase', [ShowcaseController::class, 'index']);
 
@@ -36,4 +37,3 @@ Route::get('/welcome', function () {
 
 Route::get('/project/add', [WorkController::class, 'create'])->name('project.create');
 Route::post('/project/store', [WorkController::class, 'store'])->name('project.store');
-
