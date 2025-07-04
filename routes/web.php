@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
@@ -37,3 +38,7 @@ Route::get('/welcome', function () {
 
 Route::get('/project/add', [WorkController::class, 'create'])->name('project.create');
 Route::post('/project/store', [WorkController::class, 'store'])->name('project.store');
+
+Route::controller(UserController::class)->group(function () {
+    Route::get('/user/data', 'userData')->name('user.data')->middleware('auth');
+});
