@@ -36,6 +36,11 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
+Route::get('/account', function () {
+    return view('dashboard');
+});
+
+
 Route::get('/project/add', [WorkController::class, 'create'])->name('project.create');
 Route::post('/project/store', [WorkController::class, 'store'])->name('project.store');
 

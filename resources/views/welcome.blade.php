@@ -135,7 +135,7 @@
                         <a class="nav-link" href="/login">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Account</a>
+                        <a class="nav-link" href="/account">Account</a>
                     </li>
                 </ul>
             </div>
