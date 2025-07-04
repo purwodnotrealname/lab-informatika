@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Work; 
+use App\Models\Work;
 use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -34,6 +34,7 @@ class WorkController extends Controller
         $work->source = $request->source;
         $work->user_id = Auth::id();
 
+        // Image upload
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('public/images');
             $work->image = basename($path);
@@ -41,6 +42,7 @@ class WorkController extends Controller
 
         $work->save();
 
+        // Sync tags (many-to-many)
         if ($request->tags) {
             $work->tags()->sync($request->tags);
         }
