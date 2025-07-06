@@ -2,6 +2,7 @@
 
 @section('content')
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ asset('css/projectadd.css') }}">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="/welcome">Lab-Informatika</a>
@@ -23,69 +24,6 @@
             </div>
         </div>
     </nav>
-<style>
-        input[type="text"],
-        input[type="url"],
-        textarea,
-        select,
-        input[type="file"] {
-            border: 2px solid #333; 
-            outline: none;
-            padding: 8px;
-            border-radius: 4px;
-            background-color: white;
-        }
-
-        input[type="text"]:focus,
-        input[type="url"]:focus,
-        textarea:focus,
-        select:focus,
-        input[type="file"]:focus {
-            border-color: #007bff; 
-            box-shadow: 0 0 5px rgba(0,123,255,0.5);
-        }
-
-        footer {
-            background: #2c3e50;
-            color: rgba(255,255,255,0.8);
-            padding: 50px 0 20px;
-        }
-        .social-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 5px;
-            transition: all 0.3s;
-        }
-        .social-icon:hover {
-            background: #3498db;
-            transform: translateY(-3px);
-        }
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: #2c3e50;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            opacity: 0;
-            transition: all 0.3s;
-            z-index: 1000;
-        }
-        .back-to-top.show {
-            opacity: 1;
-        }
-</style>
 <div class="container mt-5">
     <h2>Add New Project</h2>
     @if ($errors->any())
@@ -194,36 +132,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     
-    <script>
-        // Back to top button
-        $(document).ready(function(){
-            $(window).scroll(function(){
-                if ($(this).scrollTop() > 300) {
-                    $('.back-to-top').addClass('show');
-                } else {
-                    $('.back-to-top').removeClass('show');
-                }
-            });
-            
-            $('.back-to-top').click(function(e){
-                e.preventDefault();
-                $('html, body').animate({scrollTop:0}, '300');
-            });
-            
-            // Smooth scrolling for anchor links
-            $('a[href*="#"]').on('click', function(e) {
-                e.preventDefault();
-                
-                $('html, body').animate(
-                    {
-                        scrollTop: $($(this).attr('href')).offset().top - 70,
-                    },
-                    500,
-                    'linear'
-                );
-            });
-        });
-    </script>
+    <script src="{{ asset('js/projectadd.js') }}"></script>
 
 </body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
 @endsection
