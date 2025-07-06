@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MidtransController;
 
+
+// Deprecated: Ini nanti pindahin ke route web.php
+
 // Create Payment
 Route::post('/midtrans/payment', [MidtransController::class, 'createPayment'])->name('midtrans.payment');
 
