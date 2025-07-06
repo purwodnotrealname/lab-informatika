@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('css/showcase.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>Project Showcase</title>
 </head>
@@ -16,13 +17,16 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Home</a>
+                        <a class="nav-link" href="/welcome">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
+                        <a class="nav-link" href="/about">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">account</a>
+                        <a class="nav-link active" href="/showcase">Showcase</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Account</a>
                     </li>
                 </ul>
             </div>
@@ -65,3 +69,51 @@
         @endforelse
     </div>
 </div>
+<!-- Footer -->
+    <footer id="kontak">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h4 class="text-white mb-4">
+                        <i class="fas fa-laptop-code mr-2"></i>Lab Informatika
+                    </h4>
+                    <p class="mb-4">
+                        Universitas Udayana<br>
+                        Jl. Raya Kampus UNUD, Bukit Jimbaran<br>
+                        Kuta Selatan, Badung, Bali 80361
+                    </p>
+                    <div>
+                        <a href="#" class="social-icon mr-2">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-icon mr-2">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon mr-2">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-white mb-4">Tautan Cepat</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50">Tentang Kami</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50">Proyek Penelitian</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50">Publikasi</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50">Bergabung dengan Kami</a></li>
+                        <li><a href="#" class="text-white-50">Kontak</a></li>
+                    </ul>
+                </div>
+            
+            <hr class="bg-light mt-5 mb-4">
+            
+        </div>
+    </div></footer>
+    
+
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>

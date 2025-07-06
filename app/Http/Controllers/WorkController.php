@@ -19,6 +19,7 @@ class WorkController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'user_id' => 'required|max:255',
             'title' => 'required|max:255',
             'description' => 'nullable',
             'credit' => 'nullable|max:255',
@@ -32,7 +33,8 @@ class WorkController extends Controller
         $work->description = $request->description;
         $work->credit = $request->credit;
         $work->source = $request->source;
-        $work->user_id = Auth::id();
+        $work->user_id =$request->user_id; //belum ada auth
+        //$work->user_id = Auth::id();
 
         // Image upload
         if ($request->hasFile('image')) {
@@ -47,6 +49,6 @@ class WorkController extends Controller
             $work->tags()->sync($request->tags);
         }
 
-        return redirect()->route('showcase')->with('success', 'Project added successfully.');
+       return redirect('/showcase')->with('success', 'Project added successfully.');
     }
 }
