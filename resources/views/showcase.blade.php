@@ -1,31 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<style>
-     footer {
-            background: #2c3e50;
-            color: rgba(255,255,255,0.8);
-            padding: 50px 0 20px;
-        }
-        .social-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 5px;
-            transition: all 0.3s;
-        }
-        .social-icon:hover {
-            background: #3498db;
-            transform: translateY(-3px);
-        }
-
-</style>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('css/showcase.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>Project Showcase</title>
 </head>

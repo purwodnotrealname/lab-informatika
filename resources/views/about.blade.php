@@ -5,40 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>About - Lab Informatika</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            padding-top: 56px; /* To account for fixed navbar */
-        }
-        .breadcrumb {
-            background-color: transparent;
-            padding: 15px 0;
-            margin-bottom: 20px;
-        }
-        .profile-card {
-            border-left: 4px solid #0d6efd;
-            padding-left: 15px;
-            margin-bottom: 30px;
-        }
-        .research-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 30px;
-        }
-        .research-table th, .research-table td {
-            padding: 12px;
-            border-bottom: 1px solid #ddd;
-            text-align: left;
-        }
-        .research-table th {
-            background-color: #f8f9fa;
-        }
-        .content-section {
-            padding: 40px 0;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/about.css') }}">
+
 </head>
 <body>
     <!-- Your Navbar -->
