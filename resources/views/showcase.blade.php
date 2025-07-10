@@ -26,7 +26,7 @@
                         <a class="nav-link active" href="/showcase">Showcase</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Account</a>
+                        <a class="nav-link" href="/account">Account</a>
                     </li>
                 </ul>
             </div>
