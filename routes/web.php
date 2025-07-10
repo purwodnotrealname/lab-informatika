@@ -8,8 +8,21 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\ShowcaseController;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\AboutController;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 
 
+
+// routes for card image in resources
+Route::get('/project-image/{filename}', function ($filename) {
+    $path = resource_path('image/showcase/' . $filename);
+    if (!File::exists($path)) {
+        $path = resource_path('image/project/timeout.jpg');
+    }
+    return Response::file($path);
+});
+
+// page routes
 Route::get('/', function () {
     return view('landing/welcome');
 });
@@ -40,6 +53,7 @@ Route::get('/account', function () {
     return view('dashboard/dashboard');
 });
 
+// project creation
 
 Route::get('/project/add', [WorkController::class, 'create'])->name('project.create');
 Route::post('/project/store', [WorkController::class, 'store'])->name('project.store');

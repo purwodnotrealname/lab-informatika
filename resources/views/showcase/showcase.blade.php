@@ -45,10 +45,19 @@
     <div class="row">
         @forelse($projects as $project)
             <div class="col-md-4 mb-4">
-                <div class="card h-100" style="min-height: 350px;">
-                    <div class="card-body" style="padding: 2rem;">
+               <div class="card" style="height: 400px; overflow: hidden;">
+                    <div class="card-body" style="padding: 1rem;">
                         <h5 class="card-title">{{ $project['title'] }}</h5>
-                        <p class="card-text">{{ $project['description'] }}</p>
+                        <div class="card-body text-center" style="padding: 5px;">
+                            @php
+                                $imagePath = $project['image'] ?? 'default.jpg'; // fallback to default
+                            @endphp
+                           <img src="{{ url('/project-image/' . $imagePath) }}" alt="Project Image"
+                                alt="Project Image" 
+                                class="img-fluid mb-1" 
+                                style="height: 200px; width: 100%; object-fit: cover;">
+                        </div>
+
                     </div>
                     <div class="card-footer d-flex justify-content-between">
                         <a href="#" 
@@ -98,8 +107,6 @@
             </div>
         </div>
     </div>
-
-
 
 <!-- Footer -->
     <footer id="kontak">

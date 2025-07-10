@@ -3,6 +3,9 @@
 @section('content')
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ asset('css/projectadd.css') }}">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="/welcome">Lab-Informatika</a>
@@ -34,11 +37,7 @@
     <form action="{{ route('project.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
-        <div class="mb-3">
-            <label for="title" class="form-label">user id</label>
-            <input type="text" class="form-control" name="user_id" required>
-        </div>
-
+        
         <div class="mb-3">
             <label for="title" class="form-label">Project Title</label>
             <input type="text" class="form-control" name="title" required>
@@ -49,14 +48,6 @@
             <textarea class="form-control" name="description" rows="4"></textarea>
         </div>
 
-        <div class="mb-3">
-            <label for="tags" class="form-label">Tags</label>
-            <select name="tags[]" class="form-select" multiple>
-                @foreach ($tags as $tag)
-                    <option value="{{ $tag->id }}">{{ $tag->tag_name }}</option>
-                @endforeach
-            </select>
-        </div>
 
         <div class="mb-3">
             <label for="image" class="form-label">Project Image</label>
@@ -73,7 +64,22 @@
             <input type="url" class="form-control" name="source">
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit Project</button>
+        <div class="mb-3">
+            <label for="credit" class="form-label">Price</label>
+            <input type="text" class="form-control" name="price">
+        </div>
+
+        <div class="mb-3 mt-2">
+            <select name="tag_id" class="form-select">
+                <option value=""> Choose a Tag </option>
+                @foreach ($tags as $tag)
+                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        </div> 
+        <button type="submit" class="btn btn-primary center mb-3 ml-3">Submit Project</button>
     </form>
 </div>
  <div class="mb-3">
