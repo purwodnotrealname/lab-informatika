@@ -23,7 +23,7 @@ Route::controller(AuthController::class)->group(function () {
 
 // Route ke Login page
 Route::controller(LoginController::class)->group(function () {
-    Route::get('/login', 'login')->name('login.view');
+    Route::get('/login', 'login')->name('login');
     Route::post('/login', 'attemptlogin')->name('login.attempt');
     Route::get('/logout', 'attemptlogout')->name('attemptlogout')->middleware('auth');
 });
