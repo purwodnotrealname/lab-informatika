@@ -18,7 +18,7 @@
                         <a class="nav-link" href="#">Features</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">account</a>
+                        <a class="nav-link active" href="/showcase">Showcase</a>
                     </li>
                 </ul>
             </div>

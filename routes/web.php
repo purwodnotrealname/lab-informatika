@@ -11,7 +11,7 @@ use App\Http\Controllers\AboutController;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('landing/welcome');
 });
 
 Route::controller(AuthController::class)->group(function () {
@@ -29,15 +29,15 @@ Route::controller(LoginController::class)->group(function () {
 Route::get('/showcase', [ShowcaseController::class, 'index']);
 
 Route::get('/about', function () {
-    return view('about');
+    return view('landing/about');
 });
 
 Route::get('/welcome', function () {
-    return view('welcome');
+    return view('landing/welcome');
 });
 
 Route::get('/account', function () {
-    return view('dashboard');
+    return view('dashboard/dashboard');
 });
 
 

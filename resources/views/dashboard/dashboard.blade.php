@@ -18,7 +18,7 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Home</a>
+                        <a class="nav-link active" href="/welcome">Home</a>
                     </li>
                      <li class="nav-item">
                         <a class="nav-link" href="/about">About</a>
@@ -27,7 +27,7 @@
                         <a class="nav-link" href="/register">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Account</a>
+                        <a class="nav-link" href="/account">Account</a>
                     </li>
                 </ul>
             </div>

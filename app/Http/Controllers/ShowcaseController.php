@@ -14,6 +14,6 @@ class ShowcaseController extends Controller
     $works = Work::orderBy($sort, $sort === 'created_at' ? 'desc' : 'asc')
                ->get();
     
-    return view('showcase', ['projects' => $works]);
+    return view('showcase/showcase', ['projects' => $works]);
 }
 }

@@ -13,7 +13,7 @@ class WorkController extends Controller
     public function create()
     {
         $tags = Tag::all();
-        return view('projectadd', compact('tags'));
+        return view('projectcreation/projectadd', compact('tags'));
     }
 
     public function store(Request $request)
@@ -49,6 +49,6 @@ class WorkController extends Controller
             $work->tags()->sync($request->tags);
         }
 
-       return redirect('/showcase')->with('success', 'Project added successfully.');
+       return redirect('showcase/showcase')->with('success', 'Project added successfully.');
     }
 }
