@@ -31,7 +31,7 @@ class AuthController extends Controller
             'student_proof' => 'mimes:jpg,jpeg,png|max:1024',
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
         $validated = $validator->validated();
@@ -74,4 +74,25 @@ class AuthController extends Controller
             'email' => 'The provided credentials do not match our records.',
         ])->onlyInput('email');
     }
+
+    public function loginSubmit(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->intended('/showcase');
+        }
+
+        return back()->withErrors([
+            'email' => 'Invalid credentials.',
+        ])->withInput($request->only('email'));
+
+    }
 }
+
