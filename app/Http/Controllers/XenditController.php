@@ -17,6 +17,8 @@ use App\Models\PendingPayout;
 class XenditController extends Controller
 {
     protected $xenditKey;
+
+    protected $appUrl;
     protected $baseUrlV3 = 'https://api.xendit.co/v2/invoices ';
     protected $baseUrlV2 = 'https://api.xendit.co';
 
@@ -25,6 +27,7 @@ class XenditController extends Controller
     public function __construct()
     {
         $this->xenditKey = env('Xendit_API_KEY');
+        $this->appUrl = env('APP_URL');
     }
 
     public function viewTopup()
@@ -65,9 +68,10 @@ class XenditController extends Controller
         $user = Auth::user()->load('student');
 
         if (!$user) {
-            return response()->json([
-                'error' => 'Unauthorized. User not logged in.'
-            ], 401);
+            return redirect()
+            ->route('login.view')
+            ->response()
+            ->json(['error' => 'Unauthorized'], 401);
         }
 
         $user_name = $user->student->name;
@@ -88,15 +92,15 @@ class XenditController extends Controller
         $payload = [
             "external_id" => $referenceId,
             "amount" => $request->amount,
-            "description" => "Air Conditioner purchase",
+            "description" => "Top Up",
             "invoice_duration" => 86400,
             "customer" => [
                 "given_names" => $user_name,
                 "surname" => $username,
                 "email" => $user_email,
             ],
-            "success_redirect_url" => "/dashboard",
-            "failure_redirect_url" => "/payment",
+            "success_redirect_url" => $this->appUrl . "/user",
+            "failure_redirect_url" => $this->appUrl . "/payment",
             "currency" => "IDR",
             "metadata" => [
                 "store_branch" => "Bali"
@@ -248,7 +252,10 @@ class XenditController extends Controller
         $user = Auth::user();
 
         if (!$user) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return redirect()
+            ->route('login.view')
+            ->response()
+            ->json(['error' => 'Unauthorized'], 401);
         }
 
         $amount = $request->input('amount');

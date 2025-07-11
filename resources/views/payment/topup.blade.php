@@ -46,8 +46,8 @@
                     <form id="form" method="POST" class="w-full" enctype="multipart/form-data" action="{{ route('payment.create') }}">
                         @csrf
                         <div class="mt-2 text-start">
-                            <label for="amount">Jumlah Token</label>
-                            <input required type="number" name="amount" id="amount" placeholder="ex.: 69"
+                            <label for="amount">Jumlah Topup</label>
+                            <input required type="number" name="amount" min="10000"id="amount" placeholder="Rp: 6900"
                                 class="w-full p-2 border border-gray-300" />
                             @error('Input Jumlah Token')
                                 <span class="text-red-500 block text-xs">{{ $message }}</span>
