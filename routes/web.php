@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\MidtransController;
+use App\Http\Controllers\XenditController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -60,8 +60,10 @@ Route::controller(UserController::class)->group(function () {
     Route::get('/user/data', 'userData')->name('user.data')->middleware('auth');
 });
 
-Route::controller(MidtransController::class)->group(function () {
-    Route::get('/topup', 'register')->name('topup.register');
-    Route::post('/topup/create', 'createPayment')->name('topup.create');
-    Route::get('/topup/callback', 'callback')->name('midtrans.callback');
+Route::controller(XenditController::class)->group(function (){
+    Route::get('/topup','viewTopup')->name('payment.topup');
+    Route::post('/topup/create' ,'createPaymentRequest')->name('payment.create');
+    Route::post('/topup/webhook', 'handleWebhook')->name('payment.webhook');
+    Route::get('/payouts','payoutsView')->name('payment.payouts');
+    Route::post('/payouts/submit','submitPayouts')->name('payment.payouts.create');
 });

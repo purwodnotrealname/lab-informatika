@@ -43,7 +43,7 @@
                     </div>
                     <!-- Form for Topup -->
                     <!-- HATI - HATI BIKIN FORM, BEDA NAME DIKIT = BEDA HASIL PAYLOAD -->
-                    <form id="form" method="POST" class="w-full" enctype="multipart/form-data" action="{{ route('topup.create') }}">
+                    <form id="form" method="POST" class="w-full" enctype="multipart/form-data" action="{{ route('payment.create') }}">
                         @csrf
                         <div class="mt-2 text-start">
                             <label for="amount">Jumlah Token</label>
