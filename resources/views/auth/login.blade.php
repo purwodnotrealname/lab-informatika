@@ -8,16 +8,22 @@
             @csrf
             <div class="mt-2 text-start">
                 <label for="email">Email</label>
-                <input required type="email" name="email" id="email" placeholder="gedeputra@gmail.com" class="w-full p-2 border border-gray-300"/>
+                <input required type="email" name="email" id="email" placeholder="gedeputra@gmail.com"
+                    class="w-full p-2 border border-gray-300" />
             </div>
+            @error('email')
+                <span class="text-red-500 text-xs">{{ $message }}</span>
+            @enderror
             <div class="mt-2 text-start">
                 <label for="password">Password</label>
-                <input required type="password" name="password" id="password" placeholder="Your secure passsword" class="w-full p-2 border border-gray-300"/>
+                <input required type="password" name="password" id="password" placeholder="Your secure passsword"
+                    class="w-full p-2 border border-gray-300" />
             </div>
             <div class="mt-4">
-                <button type="submit" class="p-2 text-white border-0 rounded-lg  bg-sky-500 hover:bg-sky-600 ">Sign In</button>
+                <button type="submit" class="p-2 text-white border-0 rounded-lg  bg-sky-500 hover:bg-sky-600 ">Sign
+                    In</button>
             </div>
-            <p>Don't have an account? <a href="{{route('register.view')}}" class="text-sky-500">Register here</a></p>
+            <p>Don't have an account? <a href="{{ route('register') }}" class="text-sky-500">Register here</a></p>
         </form>
     </div>
 @endsection

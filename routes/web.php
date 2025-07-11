@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MidtransController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -27,14 +28,15 @@ Route::get('/', function () {
     return view('landing/welcome');
 });
 
+// Route ke Register page
 Route::controller(AuthController::class)->group(function () {
-   Route::get('/register', 'register')->name('register.view');
-   Route::post('/register', 'store')->name('register.store');
-
+    Route::get('/register', 'register')->name('register');
+    Route::post('/register', 'store')->name('register.store');
 });
 
+// Route ke Login page
 Route::controller(LoginController::class)->group(function () {
-    Route::get('/login', 'login')->name('login.view');
+    Route::get('/login', 'login')->name('login');
     Route::post('/login', 'attemptlogin')->name('login.attempt');
     Route::get('/logout', 'attemptlogout')->name('attemptlogout')->middleware('auth');
 });
@@ -42,14 +44,18 @@ Route::controller(LoginController::class)->group(function () {
 Route::get('/showcase', [ShowcaseController::class, 'index'])->name('showcase');
 
 
+// Route ke About page
 Route::get('/about', function () {
     return view('landing/about');
 });
 
+// Sama kyk halaman utama
 Route::get('/welcome', function () {
     return view('landing/welcome');
 });
 
+// Route ke User dashboard
+// TODO: Satuin route nya ini biar jadi satu sama usercontroller
 Route::get('/account', function () {
     return view('dashboard/dashboard');
 });
@@ -65,8 +71,17 @@ Route::get('/adminuser', function () {
 // project creation
 
 Route::get('/project/add', [WorkController::class, 'create'])->name('project.create');
+
+// Route untuk ke store project
 Route::post('/project/store', [WorkController::class, 'store'])->name('project.store');
 
+// Buat ngarah ke user dashboard (masih json payload)
 Route::controller(UserController::class)->group(function () {
     Route::get('/user/data', 'userData')->name('user.data')->middleware('auth');
+});
+
+Route::controller(MidtransController::class)->group(function () {
+    Route::get('/topup', 'register')->name('topup.register');
+    Route::post('/topup/create', 'createPayment')->name('topup.create');
+    Route::get('/topup/callback', 'callback')->name('midtrans.callback');
 });
