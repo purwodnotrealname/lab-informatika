@@ -63,7 +63,7 @@
     <section id="proyek" class="py-5 bg-light">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="section-title display-5 font-weight-bold">Proyek Terbaru</h2>
+                <h2 class="section-title display-5 font-weight-bold">Proyek Tags</h2>
                 <p class="text-muted">Inovasi terbaru yang dikembangkan oleh tim peneliti kami</p>
             </div>
             

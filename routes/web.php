@@ -39,7 +39,8 @@ Route::controller(LoginController::class)->group(function () {
     Route::get('/logout', 'attemptlogout')->name('attemptlogout')->middleware('auth');
 });
 
-Route::get('/showcase', [ShowcaseController::class, 'index']);
+Route::get('/showcase', [ShowcaseController::class, 'index'])->name('showcase');
+
 
 Route::get('/about', function () {
     return view('landing/about');
@@ -51,6 +52,14 @@ Route::get('/welcome', function () {
 
 Route::get('/account', function () {
     return view('dashboard/dashboard');
+});
+
+Route::get('/user', function () {
+    return view('user/user');
+});
+
+Route::get('/adminuser', function () {
+    return view('user/admin_user');
 });
 
 // project creation

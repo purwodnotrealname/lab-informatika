@@ -111,6 +111,49 @@
         </table>
     </div>
 
+       <footer id="kontak">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="ml-4 col-lg-4 mx-auto mb-4 mb-lg-0">
+                    <h4 class="text-white mb-4">
+                        <i class="fas fa-laptop-code"></i>Lab Informatika
+                    </h4>
+                    <p class="mb-4">
+                        Universitas Udayana<br>
+                        Jl. Raya Kampus UNUD, Bukit Jimbaran<br>
+                        Kuta Selatan, Badung, Bali 80361
+                    </p>
+                    <div>
+                        <a href="#" class="social-icon mr-2">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-icon mr-2">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon mr-2">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mx-auto mb-4 mb-lg-0">
+                    <h5 class="text-white mb-4">Tautan Cepat</h5>
+                    <ul class="list-unstyled">
+                        <li class="mbl-2"><a href="#" class="text-white-50">Tentang Kami</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50">Proyek Penelitian</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50">Publikasi</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50">Bergabung dengan Kami</a></li>
+                        <li><a href="#" class="text-white-50">Kontak</a></li>
+                    </ul>
+                </div>
+            <hr class="bg-light mt-5 mb-4">
+            
+        </div>
+    </div></footer>
+
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

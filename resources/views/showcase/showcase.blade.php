@@ -32,14 +32,25 @@
             </div>
         </div>
     </nav>
-    
-    <div class="container mt-3 mb-3">
-        <div class="btn-group">
-            <a href="{{ url('/showcase?sort=title') }}" class="btn btn-outline-primary btn-sm">Sort by Title</a>
-            <a href="{{ url('/showcase?sort=created_at') }}" class="btn btn-outline-primary btn-sm">Sort by Date</a>
+
+    <form method="GET" action="{{ route('showcase') }}" class="mt-4 mb-4">
+        <div class="d-flex justify-content-center align-items-center flex-wrap" style="gap: 1rem;">
+            
+            <div class="input-group" style="max-width: 400px; width: 100%;">
+                <input type="text" name="search" class="form-control" placeholder="Cari proyek berdasarkan judul..." value="{{ request('search') }}">
+                <button class="btn btn-primary" type="submit">Cari</button>
+            </div>
+
+           <div>
+                <select name="sort" class="form-select" onchange="this.form.submit()">
+                    <option value=""> Filter </option>
+                    <option value="created_at" {{ request('sort') === 'created_at' ? 'selected' : '' }}>Terbaru</option>
+                    <option value="title" {{ request('sort') === 'title' ? 'selected' : '' }}>Nama A-Z</option>
+                    <option value="credit" {{ request('sort') === 'credit' ? 'selected' : '' }}>Credit</option>
+                </select>
+          </div>
         </div>
-    </div>
-    
+    </form>    
   
   <div class="container mt-4">
     <div class="row">
@@ -111,10 +122,10 @@
 <!-- Footer -->
     <footer id="kontak">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-4 mb-lg-0">
+            <div class="row justify-content-center">
+                <div class="ml-4 col-lg-4 mx-auto mb-4 mb-lg-0">
                     <h4 class="text-white mb-4">
-                        <i class="fas fa-laptop-code mr-2"></i>Lab Informatika
+                        <i class="fas fa-laptop-code"></i>Lab Informatika
                     </h4>
                     <p class="mb-4">
                         Universitas Udayana<br>
@@ -137,17 +148,16 @@
                     </div>
                 </div>
                 
-                <div class="col-lg-4 mb-4 mb-lg-0">
+                <div class="col-lg-4 mx-auto mb-4 mb-lg-0">
                     <h5 class="text-white mb-4">Tautan Cepat</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="text-white-50">Tentang Kami</a></li>
+                        <li class="mbl-2"><a href="#" class="text-white-50">Tentang Kami</a></li>
                         <li class="mb-2"><a href="#" class="text-white-50">Proyek Penelitian</a></li>
                         <li class="mb-2"><a href="#" class="text-white-50">Publikasi</a></li>
                         <li class="mb-2"><a href="#" class="text-white-50">Bergabung dengan Kami</a></li>
                         <li><a href="#" class="text-white-50">Kontak</a></li>
                     </ul>
                 </div>
-            
             <hr class="bg-light mt-5 mb-4">
             
         </div>

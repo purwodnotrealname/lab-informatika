@@ -17,3 +17,4 @@ class ShowcaseController extends Controller
     return view('showcase/showcase', ['projects' => $works]);
 }
 }
+
