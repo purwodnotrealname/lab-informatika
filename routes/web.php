@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\XenditController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -12,40 +11,45 @@ use App\Http\Controllers\AboutController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 
-// Halaman Utama
+
+
+
+// routes for card image in resources
+Route::get('/project-image/{filename}', function ($filename) {
+    $path = resource_path('image/showcase/' . $filename);
+    if (!File::exists($path)) {
+        $path = resource_path('image/project/timeout.jpg');
+    }
+    return Response::file($path);
+});
+
+// page routes
 Route::get('/', function () {
     return view('landing/welcome');
 });
 
-// Route ke Register page
 Route::controller(AuthController::class)->group(function () {
    Route::get('/register', 'register')->name('register.view');
    Route::post('/register', 'store')->name('register.store');
 
 });
 
-// Route ke Login page
 Route::controller(LoginController::class)->group(function () {
     Route::get('/login', 'login')->name('login.view');
     Route::post('/login', 'attemptlogin')->name('login.attempt');
     Route::get('/logout', 'attemptlogout')->name('attemptlogout')->middleware('auth');
 });
 
-// Route ke showcase page
-Route::get('/showcase', [ShowcaseController::class, 'index']);
+Route::get('/showcase', [ShowcaseController::class, 'index'])->name('showcase');
 
-// Route ke About page
 Route::get('/about', function () {
     return view('landing/about');
 });
 
-// Sama kyk halaman utama 
 Route::get('/welcome', function () {
     return view('landing/welcome');
 });
 
-// Route ke User dashboard
-// TODO: Satuin route nya ini biar jadi satu sama usercontroller
 Route::get('/account', function () {
     return view('dashboard/dashboard');
 });
@@ -58,22 +62,19 @@ Route::get('/adminuser', function () {
     return view('user/admin_user');
 });
 
-//Route ke add project page
-// TODO: Bikin ini biar jadi satu cok, biar gk ribet keliatannya
-Route::get('/project/add', [WorkController::class, 'create'])->name('project.create');
-
-// Route untuk ke store project
-Route::post('/project/store', [WorkController::class, 'store'])->name('project.store');
-
-// Buat ngarah ke user dashboard (masih json payload)
-Route::controller(UserController::class)->group(function () {
-    Route::get('/user/data', 'userData')->name('user.data')->middleware('auth');
+Route::get('/user', function () {
+    return view('user/user');
 });
 
-Route::controller(XenditController::class)->group(function (){
-    Route::get('/topup','viewTopup')->name('payment.topup');
-    Route::post('/topup/create' ,'createPaymentRequest')->name('payment.create');
-    Route::post('/topup/webhook', 'handleWebhook')->name('payment.webhook');
-    Route::get('/payouts','payoutsView')->name('payment.payouts');
-    Route::post('/payouts/submit','submitPayouts')->name('payment.payouts.create');
+Route::get('/adminuser', function () {
+    return view('user/admin_user');
+});
+
+// project creation
+
+Route::get('/project/add', [WorkController::class, 'create'])->name('project.create');
+Route::post('/project/store', [WorkController::class, 'store'])->name('project.store');
+
+Route::controller(UserController::class)->group(function () {
+    Route::get('/user/data', 'userData')->name('user.data')->middleware('auth');
 });
