@@ -13,12 +13,14 @@ class CreateWorksTable extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('tag_id')->nullable(); 
             $table->string('credit')->nullable();
             $table->string('source')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
         });
     }
 
