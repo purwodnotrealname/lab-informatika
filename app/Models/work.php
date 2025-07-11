@@ -8,7 +8,7 @@ class Work extends Model
 {
     // If you use mass assignment:
     protected $fillable = [
-        'title', 'description', 'user_id', 'credit', 'source', 'image'
+        'title', 'description', 'user_id', 'tag_id', 'credit', 'source', 'image',
     ];
 
     // Define many-to-many relation with tags

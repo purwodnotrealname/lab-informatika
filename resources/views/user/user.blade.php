@@ -110,19 +110,8 @@
                 
                 <div class="project-card">
                     <div class="card-body position-relative">
-                        <span class="project-status status-active">Active</span>
-                        <h5 class="card-title">AI-Powered Medical Diagnosis System</h5>
-                        <p class="card-text text-muted">
-                            Developing machine learning algorithms for early disease detection using medical imaging data.
-                        </p>
+                
                         <div class="mb-3">
-                            <div class="d-flex justify-content-between mb-1">
-                                <span class="small">Progress</span>
-                                <span class="small">75%</span>
-                            </div>
-                            <div class="progress progress-custom">
-                                <div class="progress-bar bg-success" style="width: 75%"></div>
-                            </div>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
                             <small class="text-muted">
