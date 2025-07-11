@@ -3,6 +3,7 @@
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MidtransController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserDashboard;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
@@ -57,15 +58,13 @@ Route::get('/welcome', function () {
 // Route ke User dashboard
 // TODO: Satuin route nya ini biar jadi satu sama usercontroller
 Route::get('/account', function () {
-    return view('dashboard/dashboard');
+    return view('dashboard.dashboard');
 });
 
-Route::get('/user', function () {
-    return view('user/user');
-});
+Route::get('/user', [UserDashboard::class, 'index']);
 
 Route::get('/adminuser', function () {
-    return view('user/admin_user');
+    return view('user.admin_user');
 });
 
 // project creation
@@ -74,6 +73,7 @@ Route::get('/project/add', [WorkController::class, 'create'])->name('project.cre
 
 // Route untuk ke store project
 Route::post('/project/store', [WorkController::class, 'store'])->name('project.store');
+Route::delete('/project/destroy/{id}', [WorkController::class, 'destroy'])->name('project.delete');
 
 // Buat ngarah ke user dashboard (masih json payload)
 Route::controller(UserController::class)->group(function () {
