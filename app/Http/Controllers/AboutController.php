@@ -9,6 +9,6 @@ class AboutController extends Controller
 {
     public function home()
     {
-        return view('about'); // Displays resources/views/home.blade.php
+        return view('landing/about'); // Displays resources/views/home.blade.php
     }
 }

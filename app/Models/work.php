@@ -12,9 +12,9 @@ class Work extends Model
     ];
 
     // Define many-to-many relation with tags
-    public function tags()
+    public function tag()
     {
-        return $this->belongsToMany(Tag::class, 'worktags', 'work_id', 'tag_id');
+        return $this->belongsTo(Tag::class);
     }
 
     // Define relation with user (author)

@@ -9,10 +9,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\ShowcaseController;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\AboutController;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 
 // Halaman Utama
 Route::get('/', function () {
-    return view('welcome');
+    return view('landing/welcome');
 });
 
 // Route ke Register page
@@ -34,18 +36,26 @@ Route::get('/showcase', [ShowcaseController::class, 'index']);
 
 // Route ke About page
 Route::get('/about', function () {
-    return view('about');
+    return view('landing/about');
 });
 
 // Sama kyk halaman utama 
 Route::get('/welcome', function () {
-    return view('welcome');
+    return view('landing/welcome');
 });
 
 // Route ke User dashboard
 // TODO: Satuin route nya ini biar jadi satu sama usercontroller
 Route::get('/account', function () {
-    return view('dashboard');
+    return view('dashboard/dashboard');
+});
+
+Route::get('/user', function () {
+    return view('user/user');
+});
+
+Route::get('/adminuser', function () {
+    return view('user/admin_user');
 });
 
 //Route ke add project page
