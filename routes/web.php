@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MidtransController;
 use App\Http\Controllers\UserController;
@@ -63,9 +64,8 @@ Route::get('/account', function () {
 
 Route::get('/user', [UserDashboard::class, 'index']);
 
-Route::get('/adminuser', function () {
-    return view('user.admin_user');
-});
+Route::get('/admin', [AdminController::class, 'index'])->name('admin.work');
+Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
 
 // project creation
 

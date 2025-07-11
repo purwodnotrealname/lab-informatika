@@ -57,10 +57,6 @@
                 <label for="source" class="form-label">Source Code Link</label>
                 <input type="url" class="form-control" name="source">
             </div>
-            <div class="mb-3">
-                <label for="credit" class="form-label">Price</label>
-                <input type="text" class="form-control" name="price">
-            </div>
             <div class="mb-3 mt-2">
                 <select name="tag_id" class="form-select">
                     <option value=""> Choose a Tag </option>
@@ -70,8 +66,7 @@
                 </select>
             </div>
             <button type="submit" class="btn btn-primary center mb-3">Submit Project</button>
-    </div>
-    </form>
+        </form>
     </div>
     <div class="mb-3">
     </div>

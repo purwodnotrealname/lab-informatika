@@ -24,12 +24,12 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('admin.work') }}">
+                        <a class="nav-link" href="{{ route('admin.work') }}">
                             <i class="fas fa-home mr-1"></i>Dashboard
                         </a>
                     </li>
-                    <li>
-                        <a class="nav-link" href="{{ route('admin.users') }}">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ route('admin.users') }}">
                             <i class="fas fa-home mr-1"></i>Manage Users
                         </a>
                     </li>
@@ -97,7 +97,7 @@
             <!-- Active Projects -->
             <div class="card">
                 <div class="card-body">
-                    <h5 class="section-title mb-4">All Active Projects</h5>
+                    <h5 class="section-title mb-4">All Member</h5>
 
                     <div class="project-card">
                         <div class="card-body position-relative">
@@ -105,31 +105,20 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">No</th>
-                                        <th scope="col">Title</th>
-                                        <th scope="col">Description</th>
-                                        <th scope="col">Source</th>
-                                        <th scope="col">Credit</th>
-                                        <th scope="col">Tag</th>
-                                        <th scope="col">Action</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">NIM</th>
+                                        <th scope="col">Akt.</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($works as $work)
+                                    @foreach($users as $user)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td scope="col">{{ $work->title }}</td>
-                                            <td scope="col">{{ mb_strimwidth($work->description, 0, 40, '...') }}</td>
-                                            <td scope="col"><a href="{{ $work->source }}">{{ $work->source }}</a></td>
-                                            <td scope="col">{{ $work->credit }}</td>
-                                            <td scope="col">{{ $work->tag->name }}</td>
-                                            <td scope="col">
-                                                <form action="{{ route('project.delete', $work->id) }}" method="POST"
-                                                    onsubmit="return confirm('Apakah anda ingin menghapus data ini?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </form>
-                                            </td>
+                                            <td scope="col">{{ $user->student->name }}</td>
+                                            <td scope="col">{{ $user->email }}</td>
+                                            <td scope="col">{{ $user->student->nim }}</td>
+                                            <td scope="col">{{ $user->student->year }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
