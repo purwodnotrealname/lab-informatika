@@ -252,9 +252,10 @@ class XenditController extends Controller
         }
 
         $amount = $request->input('amount');
+        $email = $user->email;
         $payoutUrl = null; 
         try {
-            DB::transaction(function () use ($user, $amount, $request, &$payoutUrl) {
+            DB::transaction(function () use ($user, $amount, $request, &$payoutUrl, $email) {
                 $balance = Balance::firstOrCreate(['user_id' => $user->id]);
 
                 if ($balance->amount < $amount) {
@@ -274,7 +275,7 @@ class XenditController extends Controller
                 $payload = [
                     'external_id' => $externalId,
                     'amount' => $amount,
-                    'email' => $request->email,
+                    'email' => $email,
                 ];
 
                 $client = new Client();

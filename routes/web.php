@@ -9,6 +9,7 @@ use App\Http\Controllers\ShowcaseController;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\AboutController;
 use Illuminate\Support\Facades\File;
+use App\Http\Controllers\XenditController;
 use Illuminate\Support\Facades\Response;
 
 
@@ -62,14 +63,6 @@ Route::get('/adminuser', function () {
     return view('user/admin_user');
 });
 
-Route::get('/user', function () {
-    return view('user/user');
-});
-
-Route::get('/adminuser', function () {
-    return view('user/admin_user');
-});
-
 // project creation
 
 Route::get('/project/add', [WorkController::class, 'create'])->name('project.create');
@@ -77,4 +70,12 @@ Route::post('/project/store', [WorkController::class, 'store'])->name('project.s
 
 Route::controller(UserController::class)->group(function () {
     Route::get('/user/data', 'userData')->name('user.data')->middleware('auth');
+});
+
+Route::controller(XenditController::class)->group( function () {
+    Route::get('/topup', 'viewTopuo')->name('topup.view');
+    Route::post('/topup/create', 'createPaymentRequest')->name('payment.create');
+    Route::get('/topup/webhook', 'handleWebhook')->name('submit.payment');
+    Route::get('/payout', 'payoutsView')->name('payouts.view');
+    Route::post('/payout/create', 'submitPayouts')->name('payment.payouts.create');
 });
