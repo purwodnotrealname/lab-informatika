@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserDashboard;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
@@ -11,7 +13,6 @@ use App\Http\Controllers\AboutController;
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\XenditController;
 use Illuminate\Support\Facades\Response;
-
 
 
 
@@ -30,13 +31,12 @@ Route::get('/', function () {
 });
 
 Route::controller(AuthController::class)->group(function () {
-   Route::get('/register', 'register')->name('register.view');
-   Route::post('/register', 'store')->name('register.store');
-
+    Route::get('/register', 'register')->name('register');
+    Route::post('/register', 'store')->name('register.store');
 });
 
 Route::controller(LoginController::class)->group(function () {
-    Route::get('/login', 'login')->name('login.view');
+    Route::get('/login', 'login')->name('login');
     Route::post('/login', 'attemptlogin')->name('login.attempt');
     Route::get('/logout', 'attemptlogout')->name('attemptlogout')->middleware('auth');
 });
@@ -52,27 +52,25 @@ Route::get('/welcome', function () {
 });
 
 Route::get('/account', function () {
-    return view('dashboard/dashboard');
+    return view('dashboard.dashboard');
 });
 
-Route::get('/user', function () {
-    return view('user/user');
-});
+Route::get('/user', [UserDashboard::class, 'index']);
 
-Route::get('/adminuser', function () {
-    return view('user/admin_user');
-});
+Route::get('/admin', [AdminController::class, 'index'])->name('admin.work');
+Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
 
 // project creation
 
 Route::get('/project/add', [WorkController::class, 'create'])->name('project.create');
 Route::post('/project/store', [WorkController::class, 'store'])->name('project.store');
+Route::delete('/project/destroy/{id}', [WorkController::class, 'destroy'])->name('project.delete');
 
 Route::controller(UserController::class)->group(function () {
     Route::get('/user/data', 'userData')->name('user.data')->middleware('auth');
 });
 
-Route::controller(XenditController::class)->group( function () {
+Route::controller(XenditController::class)->group(function () {
     Route::get('/topup', 'viewTopup')->name('topup.view');
     Route::post('/topup/create', 'createPaymentRequest')->name('payment.create');
     Route::get('/topup/webhook', 'handleWebhook')->name('submit.payment');

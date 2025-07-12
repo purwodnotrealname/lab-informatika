@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -17,7 +17,8 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $user = new User;
         $student = new Student;
 
@@ -30,7 +31,7 @@ class AuthController extends Controller
             'student_proof' => 'mimes:jpg,jpeg,png|max:1024',
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
         $validated = $validator->validated();
@@ -50,12 +51,28 @@ class AuthController extends Controller
         $student->student_proof = $stored_proof;
 
         $student->save();
-        return redirect()->route('login.view');
+        return redirect()->route('login');
     }
 
-       public function login()
+    public function login()
     {
         return view('auth.login');
+    }
+
+    public function authenticate(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->intended('dashboard');
+        }
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
     }
 
     public function loginSubmit(Request $request)
@@ -77,4 +94,12 @@ class AuthController extends Controller
         ])->withInput($request->only('email'));
 
     }
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect(route('login'));
+    }
 }
+

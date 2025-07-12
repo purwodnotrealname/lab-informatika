@@ -34,33 +34,27 @@ class WorkController extends Controller
         $work->credit = $request->credit;
         $work->source = $request->source;
         $work->user_id = Auth::id();
-        $work->tag_id = $request->tag_id; 
+        $work->tag_id = $request->tag_id;
 
-    if ($request->hasFile('image')) {
-        $path = $request->file('image')->store('public/images');
-        $work->image = basename($path); // Save only filename
-    }
-        
-        //belum ada auth
-        //$work->user_id = Auth::id();
-
-        // Image upload
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('public/images');
-            $work->image = basename($path);
+            $work->image = basename($path); // Save only filename
         }
-        
 
         $work->save();
 
         // Sync tags (many-to-many)
         if ($request->tags) {
             $work->tag_id = $request->tag_id;
-
         }
+        return redirect('/showcase')->with('success', 'Project added successfully.');
+    }
+    public function destroy($id)
+    {
+        $work = Work::findOrFail($id);
 
-        
+        $work->delete();
 
-       return redirect('/showcase')->with('success', 'Project added successfully.');
+        return redirect()->back();
     }
 }
