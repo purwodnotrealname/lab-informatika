@@ -13,6 +13,8 @@ use App\Http\Controllers\AboutController;
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\XenditController;
 use Illuminate\Support\Facades\Response;
+use App\Http\Controllers\ForgotPasswordController;
+
 
 
 
@@ -41,6 +43,17 @@ Route::controller(LoginController::class)->group(function () {
     Route::get('/logout', 'attemptlogout')->name('attemptlogout')->middleware('auth');
 });
 
+// Show form to request reset
+Route::get('forgot-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('password.request');
+
+// Submit email to get reset link
+Route::post('forgot-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('password.email');
+
+// Show reset form with token
+Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('password.reset');
+
+// Submit new password
+Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('password.update');
 Route::get('/showcase', [ShowcaseController::class, 'index'])->name('showcase');
 
 Route::get('/about', function () {
