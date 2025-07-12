@@ -74,7 +74,7 @@ class ForgotPasswordController extends Controller
             return back()->withErrors(['email' => 'Failed to send reset email.']);
         }
     
-        return back()->with('message', 'We have e-mailed your password reset link!');
+        return back()->with('message', 'We have send your password reset link to your email!');
     }
 
     protected function buildResetEmailContent(string $token): string
@@ -87,13 +87,28 @@ class ForgotPasswordController extends Controller
         // Get token from query string
         $token = $request->query('token');
 
+        $passwordReset = DB::table('password_reset_tokens')
+        ->where('token', $token)
+        ->first();
+
+        $email = $passwordReset ? $passwordReset->email : null;
+
         if (!$token) {
             return redirect()->route('password.request')->withErrors([
                 'token' => 'Invalid or missing token.'
             ]);
         }
 
-        return view('auth.forgetPasswordLink', ['token' => $token]);
+        if (!$email) {
+            return redirect()->route('password.request')->withErrors([
+                'token' => 'Invalid token or associated email not found.'
+            ]);
+        }
+
+        return view('auth.forgetPasswordLink', [
+            'token' => $token,
+            'email' => $email,
+        ]);
     }
 
     public function submitResetPasswordForm(Request $request)
