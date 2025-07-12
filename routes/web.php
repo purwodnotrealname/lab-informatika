@@ -43,17 +43,26 @@ Route::controller(LoginController::class)->group(function () {
     Route::get('/logout', 'attemptlogout')->name('attemptlogout')->middleware('auth');
 });
 
+Route::controller(ForgotPasswordController::class)->group(function () {
+    Route::get('/forgot-password',  'showForgetPasswordForm')->name('password.request');
+    Route::post('/forgot-password','submitForgetPasswordForm')->name('password.email');
+    Route::get('/reset-password', 'showResetPasswordForm')->name('password.reset');
+    Route::post('/reset-password','submitResetPasswordForm')->name('password.update');
+});
+
 // Show form to request reset
-Route::get('forgot-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('password.request');
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('password.request');
 
 // Submit email to get reset link
-Route::post('forgot-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('password.email');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('password.email');
 
 // Show reset form with token
-Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('password.reset');
+Route::get('/reset-password', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('password.reset');
 
 // Submit new password
-Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('password.update');
+Route::post('/reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('password.update');
+
+
 Route::get('/showcase', [ShowcaseController::class, 'index'])->name('showcase');
 
 Route::get('/about', function () {

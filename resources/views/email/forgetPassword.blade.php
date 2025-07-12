@@ -3,8 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Reset Password</title>
+<title>Reset Password</title>
 </head>
 <body>
     <h2>Password Reset Request</h2>
