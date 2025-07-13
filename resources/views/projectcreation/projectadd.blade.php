@@ -32,43 +32,64 @@
         <h2>Add New Project</h2>
         @if ($errors->any())
             <div class="alert alert-danger">
-                <ul>@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
         @endif
+
         <form action="{{ route('project.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 <label for="title" class="form-label">Project Title</label>
                 <input type="text" class="form-control" name="title" required>
             </div>
+
             <div class="mb-3">
                 <label for="description" class="form-label">Project Description</label>
                 <textarea class="form-control" name="description" rows="4"></textarea>
             </div>
+
             <div class="mb-3">
                 <label for="image" class="form-label">Project Image</label>
                 <input type="file" class="form-control" name="image">
             </div>
+
             <div class="mb-3">
                 <label for="credit" class="form-label">Credit</label>
                 <input type="text" class="form-control" name="credit">
             </div>
+
             <div class="mb-3">
-                <label for="source" class="form-label">Source Code Link</label>
-                <input type="url" class="form-control" name="source">
+                <label for="video_link" class="form-label">Video Link</label>
+                <input type="url" class="form-control" name="video_link">
             </div>
-            <div class="mb-3 mt-2">
+
+            <div class="mb-3">
+                <label for="demo_link" class="form-label">Demo Link</label>
+                <input type="url" class="form-control" name="demo_link">
+            </div>
+
+            <div class="mb-3">
+                <label for="source" class="form-label">Source Code (.zip, .rar, .7z.)</label>
+                <input type="file" class="form-control" name="source" accept=".zip,.rar,.tar,.gz,.7z">
+            </div>
+
+            Current upload limit: {{ ini_get('upload_max_filesize') }} / {{ ini_get('post_max_size') }}
+
+            <div class="mb-3 mt-4">
                 <select name="tag_id" class="form-select">
-                    <option value=""> Choose a Tag </option>
+                    <option value="">Choose a Tag</option>
                     @foreach ($tags as $tag)
                         <option value="{{ $tag->id }}">{{ $tag->name }}</option>
                     @endforeach
                 </select>
             </div>
+
             <button type="submit" class="btn btn-primary center mb-3">Submit Project</button>
         </form>
-    </div>
-    <div class="mb-3">
     </div>
     <!-- Footer -->
     <footer id="kontak">

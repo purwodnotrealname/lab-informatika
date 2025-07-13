@@ -15,7 +15,9 @@ class CreateWorksTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('tag_id')->nullable(); 
             $table->string('credit')->nullable();
-            $table->string('source')->nullable();
+            $table->string('video_link')->nullable();
+            $table->string('demo_link')->nullable();
+            $table->string('source_code')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();
 

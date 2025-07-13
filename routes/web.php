@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserDashboard;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ShowcaseController;
 use App\Http\Controllers\WorkController;
@@ -13,16 +14,17 @@ use App\Http\Controllers\AboutController;
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\XenditController;
 use Illuminate\Support\Facades\Response;
+use App\Http\Controllers\ForgotPasswordController;
 
 
-
-// routes for card image in resources
 Route::get('/project-image/{filename}', function ($filename) {
-    $path = resource_path('image/showcase/' . $filename);
-    if (!File::exists($path)) {
-        $path = resource_path('image/project/timeout.jpg');
+    $path = "showcase/" . $filename;
+
+    if (!Storage::disk('public')->exists($path)) {
+        $path = "project/timeout.jpg";
     }
-    return Response::file($path);
+
+    return response()->file(Storage::disk('public')->path($path));
 });
 
 // page routes
@@ -40,6 +42,26 @@ Route::controller(LoginController::class)->group(function () {
     Route::post('/login', 'attemptlogin')->name('login.attempt');
     Route::get('/logout', 'attemptlogout')->name('attemptlogout')->middleware('auth');
 });
+
+Route::controller(ForgotPasswordController::class)->group(function () {
+    Route::get('/forgot-password',  'showForgetPasswordForm')->name('password.request');
+    Route::post('/forgot-password','submitForgetPasswordForm')->name('password.email');
+    Route::get('/reset-password', 'showResetPasswordForm')->name('password.reset');
+    Route::post('/reset-password','submitResetPasswordForm')->name('password.update');
+});
+
+// Show form to request reset
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('password.request');
+
+// Submit email to get reset link
+Route::post('/forgot-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('password.email');
+
+// Show reset form with token
+Route::get('/reset-password', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('password.reset');
+
+// Submit new password
+Route::post('/reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('password.update');
+
 
 Route::get('/showcase', [ShowcaseController::class, 'index'])->name('showcase');
 

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,15 +60,15 @@
                <div class="card" style="height: 400px; overflow: hidden;">
                     <div class="card-body" style="padding: 1rem;">
                         <h5 class="card-title">{{ $project['title'] }}</h5>
-                        <div class="card-body text-center" style="padding: 5px;">
-                            @php
-                                $imagePath = $project['image'] ?? 'default.jpg'; // fallback to default
-                            @endphp
-                           <img src="{{ url('/project-image/' . $imagePath) }}" alt="Project Image"
-                                alt="Project Image" 
-                                class="img-fluid mb-1" 
-                                style="height: 200px; width: 100%; object-fit: cover;">
-                        </div>
+                            <div class="card">
+                                <div class="card-body text-center" style="padding: 5px;">
+                                    @php
+                                        $imagePath = $project->image ?? 'default.jpg';
+                                    @endphp
+                                    <img src="{{ asset("storage/showcase/{$project->image}") }}" alt="Project Image" class="img-fluid mb-1"
+                                        style="height: 200px; width: 100%; object-fit: cover;">
+                                </div>
+                            </div>
 
                     </div>
                     <div class="card-footer d-flex justify-content-between">
