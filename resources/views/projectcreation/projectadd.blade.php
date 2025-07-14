@@ -73,6 +73,11 @@
             </div>
 
             <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" class="form-control" name="price" min="0" required>
+            </div>  
+
+            <div class="mb-3">
                 <label for="source" class="form-label">Source Code (.zip, .rar, .7z.)</label>
                 <input type="file" class="form-control" name="source" accept=".zip,.rar,.tar,.gz,.7z">
             </div>
