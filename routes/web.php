@@ -15,12 +15,14 @@ use Illuminate\Support\Facades\File;
 use App\Http\Controllers\XenditController;
 use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\PurchaseController;
 
 
 Route::get('/project-image/{filename}', function ($filename) {
-    $path = "showcase/" . $filename;
+    $path = "showcase/images/" . $filename;
 
     if (!Storage::disk('public')->exists($path)) {
+        logger()->error("File not found: " . $path);
         $path = "project/timeout.jpg";
     }
 
@@ -48,6 +50,15 @@ Route::controller(ForgotPasswordController::class)->group(function () {
     Route::post('/forgot-password','submitForgetPasswordForm')->name('password.email');
     Route::get('/reset-password', 'showResetPasswordForm')->name('password.reset');
     Route::post('/reset-password','submitResetPasswordForm')->name('password.update');
+});
+
+Route::controller(PurchaseController::class)->group(function () {
+    Route::get('/check-purchase/{project_id}', 'checkPurchaseStatus')->name('checkPurchaseStatus');
+    Route::get('/download-project/{project_id}', 'downloadProject')->name('downloadProject');
+    Route::post('/purchase-project', 'purchaseProject')->name('purchase.project');
+    Route::get('/get-project-price/{project_id}', 'getProjectPrice')->name('getProjectPrice');
+    Route::get('/get-current-balance', 'getCurrentBalance')->name('getCurrentBalance');
+    
 });
 
 // Show form to request reset
