@@ -58,7 +58,7 @@
             <div class="mt-4">
                 <button type="submit" class="p-2 text-white border-0 rounded-lg  bg-sky-500 hover:bg-sky-600 ">Signup</button>
             </div>
-            <p>Already have an account? <a href="/login" class="text-sky-500">Login here</a></p>
+            <p>Already have an account? <a href="{{ route('login') }}" class="text-sky-500">Login here</a></p>
         </form>
     </div>
 @endsection
