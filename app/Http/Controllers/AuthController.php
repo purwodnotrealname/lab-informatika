@@ -47,7 +47,6 @@ class AuthController extends Controller
         $student->user_id = $user->id;
         $student->nim = $validated['nim'];
         $student->name = $validated['full_name'];
-        $student->year = $request->get("year");
         $student->student_proof = $stored_proof;
 
         $student->save();
