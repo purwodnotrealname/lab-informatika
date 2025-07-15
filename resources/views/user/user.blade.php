@@ -64,14 +64,17 @@
     <!-- Quick Stats -->
     <section class="container mt-5">
         <div class="quick-stats">
-            <div class="row">
+            <div class="row flex align-items-center">
                 <div class="col-md-3 stat-item">
-                    <div class="stat-number">{{ $works->count() }}</div>
+                    <div class="stat-number">{{ $user->works->count() }}</div>
                     <div>Active Projects</div>
                 </div>
                 <div class="col-md-3 stat-item">
-                    <div class="stat-number">0</div>
+                    <div class="stat-number">Rp.{{ $user->balance->amount }}</div>
                     <div>Credit Amount</div>
+                </div>
+                <div>
+                    <a href="/topup" class="btn btn-light">Top up</a>
                 </div>
             </div>
         </div>
@@ -80,10 +83,9 @@
     <!-- Main Content -->
     <section class="container mb-5">
         <div class="row">
-            <!-- Active Projects -->
-            <div class="col-lg-8 mb-4">
+            <div class="col-lg-6 mb-4">
                 <h2 class="section-title">Your Active Projects</h2>
-                @foreach($works as $work)
+                @foreach($user->works as $work)
                     <div class="project-card">
                         <div class="card-body position-relative">
                             <div class="mb-3">
@@ -119,6 +121,26 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger">Delete</button>
                                     </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            <div class="col-lg-6">
+                <h2 class="section-title">Purchased Projects</h2>
+                @foreach($purchasedProject as $work)
+                    <div class="project-card">
+                        <div class="card-body position-relative">
+                            <div class="mb-3">
+                                <h4>
+                                    {{ $work->project->title }}
+                                </h4>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex">
+                                    <a href="/storage/showcase/source_code/{{ $work->project->source_code }}"
+                                        class="btn btn-outline-primary" target="_blank">Show source code</a>
                                 </div>
                             </div>
                         </div>

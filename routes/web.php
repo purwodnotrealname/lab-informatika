@@ -56,7 +56,7 @@ Route::controller(PurchaseController::class)->group(function () {
     Route::get('/get-project-price/{project_id}', 'getProjectPrice')->name('getProjectPrice');
     Route::get('/get-current-balance', 'getCurrentBalance')->name('getCurrentBalance');
 
-});
+})->middleware('auth');
 
 // Show form to request reset
 Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('password.request');
@@ -85,7 +85,7 @@ Route::get('/account', function () {
     return view('dashboard.dashboard');
 });
 
-Route::get('/user', [UserDashboard::class, 'index']);
+Route::get('/user', [UserDashboard::class, 'index'])->middleware('auth');
 
 Route::get('/dashboard', function () {
     if (auth()->user()->role == 'student') {
@@ -95,7 +95,7 @@ Route::get('/dashboard', function () {
     }
 })->middleware('auth');
 
-Route::middleware(IsAdmin::class)->group(function () {
+Route::middleware(['auth', IsAdmin::class])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.work');
     Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
 });
@@ -115,4 +115,4 @@ Route::controller(XenditController::class)->group(function () {
     Route::get('/topup/webhook', 'handleWebhook')->name('submit.payment');
     Route::get('/payout', 'payoutsView')->name('payouts.view');
     Route::post('/payout/create', 'submitPayouts')->name('payment.payouts.create');
-});
+})->middleware('auth');
