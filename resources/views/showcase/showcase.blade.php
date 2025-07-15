@@ -1,13 +1,15 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/showcase.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>Project Showcase</title>
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
@@ -18,17 +20,29 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/welcome">Home</a>
+                        <a class="nav-link" href="#">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/about">About</a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link active" href="/showcase">Showcase</a>
+                        <a class="nav-link active" href="/showcase">Account</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/account">Account</a>
-                    </li>
+                    @if(auth()->user())
+                        <li class="nav-item">
+                            <a class="nav-link" href="/dashboard">Dashboard</a>
+                        </li>
+                        @if(auth()->user()->role == 'student')
+                            <li class="nav-item">
+                                <button disabled class="btn btn-outline-light">Credit: 0</button>
+                            </li>
+                        @endif
+                    @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">Login</a>
+                        </li>
+                    @endif
                 </ul>
             </div>
         </div>
@@ -36,72 +50,67 @@
 
     <form method="GET" action="{{ route('showcase') }}" class="mt-4 mb-4">
         <div class="d-flex justify-content-center align-items-center flex-wrap" style="gap: 1rem;">
-            
+
             <div class="input-group" style="max-width: 400px; width: 100%;">
-                <input type="text" name="search" class="form-control" placeholder="Cari proyek berdasarkan judul..." value="{{ request('search') }}">
+                <input type="text" name="search" class="form-control" placeholder="Cari proyek berdasarkan judul..."
+                    value="{{ request('search') }}">
                 <button class="btn btn-primary" type="submit">Cari</button>
             </div>
 
-           <div>
+            <div>
                 <select name="sort" class="form-select" onchange="this.form.submit()">
                     <option value=""> Filter </option>
                     <option value="created_at" {{ request('sort') === 'created_at' ? 'selected' : '' }}>Terbaru</option>
                     <option value="title" {{ request('sort') === 'title' ? 'selected' : '' }}>Nama A-Z</option>
                     <option value="credit" {{ request('sort') === 'credit' ? 'selected' : '' }}>Credit</option>
                 </select>
-          </div>
+            </div>
         </div>
-    </form>    
-  
-  <div class="container mt-4">
-    <div class="row">
-        @forelse($projects as $project)
-            <div class="col-md-4 mb-4">
-               <div class="card" style="height: 400px; overflow: hidden;">
-                    <div class="card-body" style="padding: 1rem;">
-                        <h5 class="card-title">{{ $project['title'] }}</h5>
+    </form>
+
+    <div class="container mt-4">
+        <div class="row">
+            @forelse($projects as $project)
+                <div class="col-md-4 mb-4">
+                    <div class="card" style="height: 400px; overflow: hidden;">
+                        <div class="card-body" style="padding: 1rem;">
+                            <h5 class="card-title">{{ $project['title'] }}</h5>
                             <div class="card">
                                 <div class="card-body text-center" style="padding: 5px;">
-                                    @php
-                                        $imagePath = $project->image ?? 'default.jpg';
-                                    @endphp
-                                    <img src="{{ asset("storage/showcase/{$project->image}") }}" alt="Project Image" class="img-fluid mb-1"
-                                        style="height: 200px; width: 100%; object-fit: cover;">
+                                    <img src="{{ asset("storage/showcase/images/{$project->image}") }}" alt="Project Image"
+                                        class="img-fluid mb-1" style="height: 200px; width: 100%; object-fit: cover;">
                                 </div>
                             </div>
 
-                    </div>
-                    <div class="card-footer d-flex justify-content-between">
-                        <a href="#" 
-                            class="btn btn-primary btn-sm"
-                            data-toggle="modal"
-                            data-target="#projectModal"
-                            data-title="{{ $project['title'] }}"
-                            data-description="{{ $project['description'] }}"
-                            data-image="{{ $project['image_url'] ?? 'default.jpg' }}"
-                            data-members="{{ implode(',', $project['members'] ?? []) }}"
-                            data-video="{{ $project['video_url'] ?? '#' }}"> Details </a>
-                        @if(!empty($project['view_url']))
-                            <a href="{{ $project['view_url'] }}" target="_blank" class="btn btn-success btn-sm">View</a>
-                        @else
-                            <button class="btn btn-secondary btn-sm" disabled>No View</button>
-                        @endif
-                    </div>
-                    <div class="card-footer text-muted small">
-                        Created at: {{ $project['created_at'] }}
+                        </div>
+                        <div class="card-footer d-flex justify-content-between">
+                            <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#projectModal"
+                                data-title="{{ $project['title'] }}" data-description="{{ $project['description'] }}"
+                                data-image="{{ $project['image_url'] }}"
+                                data-members="{{ implode(',', $project['members'] ?? []) }}"
+                                data-video="{{ $project['video_url'] ?? '#' }}"> Details </a>
+                            @if(!empty($project['view_url']))
+                                <a href="{{ $project['view_url'] }}" target="_blank" class="btn btn-success btn-sm">View</a>
+                            @else
+                                <button class="btn btn-secondary btn-sm" disabled>No View</button>
+                            @endif
+                        </div>
+                        <div class="card-footer text-muted small">
+                            Created at: {{ $project['created_at'] }}
+                        </div>
                     </div>
                 </div>
-            </div>
-        @empty
-            <div class="col-12">
-                <div class="alert alert-warning">No projects found in the database.</div>
-            </div>
-        @endforelse
+            @empty
+                <div class="col-12">
+                    <div class="alert alert-warning">No projects found in the database.</div>
+                </div>
+            @endforelse
+        </div>
     </div>
-</div>
 
-<!-- Modal -->  
-    <div class="modal fade" id="projectModal" tabindex="-1" role="dialog" aria-labelledby="projectModalLabel" aria-hidden="true">
+    <!-- Modal -->
+    <div class="modal fade" id="projectModal" tabindex="-1" role="dialog" aria-labelledby="projectModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -111,16 +120,18 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <img id="projectImage" src="" alt="Project Image" class="img-fluid mb-3">
-                    <p id="projectDescription"></p>
+                    <img src="{{ asset("storage/showcase/images/{$project->image}") }}" alt="Project Image"
+                        class="img-fluid mb-1" style="height: 400px; width: 100%; object-fit: cover;">
+                    <p id="projectDescription" class="mt-2"></p>
                     <ul id="projectMembers" class="list-unstyled"></ul>
-                    <a href="#" target="_blank" id="projectVideo" class="btn btn-outline-primary btn-sm mt-2 d-none">Lihat Video</a>
+                    <a href="#" target="_blank" id="projectVideo"
+                        class="btn btn-outline-primary btn-sm mt-2 d-none">Lihat Video</a>
                 </div>
             </div>
         </div>
     </div>
 
-<!-- Footer -->
+    <!-- Footer -->
     <footer id="kontak">
         <div class="container">
             <div class="row justify-content-center">
@@ -148,7 +159,7 @@
                         </a>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-4 mx-auto mb-4 mb-lg-0">
                     <h5 class="text-white mb-4">Tautan Cepat</h5>
                     <ul class="list-unstyled">
@@ -159,16 +170,25 @@
                         <li><a href="#" class="text-white-50">Kontak</a></li>
                     </ul>
                 </div>
-            <hr class="bg-light mt-5 mb-4">
-            
+                <hr class="bg-light mt-5 mb-4">
+
+            </div>
         </div>
-    </div></footer>
+    </footer>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    
-<script src="{{ asset('js/showcase.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+    <script src="{{ asset('js/showcase.js') }}"></script>
 
 
-</body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
+
+</html>
