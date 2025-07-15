@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ asset('css/showcase.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <title>Project Showcase</title>
 </head>
 
@@ -77,22 +78,32 @@
                             <h5 class="card-title">{{ $project['title'] }}</h5>
                             <div class="card">
                                 <div class="card-body text-center" style="padding: 5px;">
+
                                     <img src="{{ asset("storage/showcase/images/{$project->image}") }}" alt="Project Image"
                                         class="img-fluid mb-1" style="height: 200px; width: 100%; object-fit: cover;">
                                 </div>
                             </div>
-
                         </div>
                         <div class="card-footer d-flex justify-content-between">
                             <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#projectModal"
-                                data-title="{{ $project['title'] }}" data-description="{{ $project['description'] }}"
-                                data-image="{{ $project['image_url'] }}"
-                                data-members="{{ implode(',', $project['members'] ?? []) }}"
-                                data-video="{{ $project['video_url'] ?? '#' }}"> Details </a>
-                            @if(!empty($project['view_url']))
-                                <a href="{{ $project['view_url'] }}" target="_blank" class="btn btn-success btn-sm">View</a>
+                                data-title="{{ $project->title }}" data-description="{{ $project->description }}"
+                                data-credit="{{ $project->credit }}"
+                                data-image="{{ asset('storage/showcase/images/' . $project->image) }}"
+                                data-video="{{ $project->video_link }}" data-demo="{{ $project->demo_link }}"
+                                data-created-at="{{ $project->created_at->format('M d, Y') }}"
+                                data-category="{{ $project->tag->name ?? 'No Category' }}"
+                                data-author="{{ $project->user->name ?? 'Unknown' }}" data-project-id="{{ $project->id }}"
+                                data-price="{{ $project->price !== null ? $project->price : 0 }}">
+                                Details
+                            </a>
+
+                            @if (!empty($project->view_url))
+                                <a href="{{ $project->view_url }}" target="_blank" class="btn btn-success btn-sm">View</a>
                             @else
-                                <button class="btn btn-secondary btn-sm" disabled>No View</button>
+                                <button class="btn btn-sm btn-action btn-secondary" data-project-id="{{ $project->id }}"
+                                    data-price="{{ $project->price !== null ? $project->price : 0 }}">
+                                    <i class="fas fa-spinner fa-spin"></i> Checking...
+                                </button>
                             @endif
                         </div>
                         <div class="card-footer text-muted small">
@@ -114,19 +125,79 @@
         <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="projectModalLabel">Project Title</h5>
+                    <h5 class="modal-title" id="projectModalLabel">Project Details</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <img src="{{ asset("storage/showcase/images/{$project->image}") }}" alt="Project Image"
-                        class="img-fluid mb-1" style="height: 400px; width: 100%; object-fit: cover;">
-                    <p id="projectDescription" class="mt-2"></p>
-                    <ul id="projectMembers" class="list-unstyled"></ul>
-                    <a href="#" target="_blank" id="projectVideo"
-                        class="btn btn-outline-primary btn-sm mt-2 d-none">Lihat Video</a>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img id="projectImage" src="" alt="Project Image" class="img-fluid mb-3 rounded">
+                        </div>
+                        <div class="col-md-6">
+                            <h4 id="projectTitle"></h4>
+                            <hr>
+                            <p><strong>Description:</strong></p>
+                            <p id="projectDescription" class="text-justify"></p>
+
+                            <p><strong>Credit:</strong> <span id="projectCredit"></span></p>
+                            <p><strong>Created by:</strong> <span id="projectAuthor"></span></p>
+                            <p><strong>Created at:</strong> <span id="projectCreatedAt"></span></p>
+                            <p><strong>Category:</strong> <span id="projectCategory"></span></p>
+
+                            <div class="mt-3">
+                                <a id="projectVideoLink" href="#" target="_blank"
+                                    class="btn btn-outline-primary btn-sm mr-2">
+                                    <i class="fas fa-video"></i> View Video
+                                </a>
+                                <a id="projectDemoLink" href="#" target="_blank" class="btn btn-outline-success btn-sm">
+                                    <i class="fas fa-external-link-alt"></i> View Demo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Purchase Modal -->
+    <div class="modal fade" id="purchaseModal" tabindex="-1" role="dialog" aria-labelledby="purchaseModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="purchaseModalLabel">Purchase Project</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="purchaseForm" method="POST" action="{{ route('purchase.project') }}">
+                    @csrf
+                    <div class="modal-body">
+                        <input type="hidden" name="project_id" id="modalProjectId">
+                        <div class="form-group">
+                            <label for="projectPrice">Price</label>
+                            <input type="number" class="form-control" id="projectPrice" name="amount" readonly>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="confirmPurchase" required>
+                            <label class="form-check-label" for="confirmPurchase">I agree to purchase this
+                                project</label>
+                        </div>
+                        <div class="mt-2">
+                            <small class="text-muted">Your balance:
+                                {{ Auth::check() ? Auth::user()->balance->amount ?? 0 : 0 }} credits</small>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Purchase</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -177,18 +248,20 @@
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+        </script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
         integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
     <script src="{{ asset('js/showcase.js') }}"></script>
 
 
-</body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
+</body>
 
 </html>
