@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Student extends Model
 {
     protected $guarded = ["id"];
-    protected $fillable = ["user_id", "nim", "name", "year", "student_proof"];
+    protected $fillable = ["user_id", "nim", "name", "student_proof"];
 
-    public function user(): BelongsTo {
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 }

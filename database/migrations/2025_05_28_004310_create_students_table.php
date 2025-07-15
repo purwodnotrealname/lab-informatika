@@ -5,8 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Models\User;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -16,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('nim')->unique();
             $table->string('name');
-            $table->year('year');
             $table->string('student_proof');
             $table->foreignIdFor(User::class)->constrained('users', 'id')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
