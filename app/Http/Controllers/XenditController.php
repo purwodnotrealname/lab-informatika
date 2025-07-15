@@ -251,7 +251,6 @@ class XenditController extends Controller
     {
         $request->validate([
             'amount' => 'required|numeric|min:10000',
-            'email' => 'required|email',
         ]);
 
         $user = Auth::user();
@@ -290,6 +289,8 @@ class XenditController extends Controller
                     'email' => $email,
                 ];
 
+                \Log::info("Attempting payout with payload", $payload);
+
                 $client = new Client();
                 $response = $client->post("{$this->baseUrlV2}/payouts", [
                     'auth' => [$this->xenditKey, ''],
@@ -310,6 +311,7 @@ class XenditController extends Controller
             return back()->withErrors(['error' => 'Failed to get payout URL']);
         } catch (\Exception $e) {
             \Log::error("Xendit Payout Failed", ['error' => $e->getMessage()]);
+            \Log::error("Payout Failed: " . $e->getMessage());
             return back()->withErrors(['error' => 'Failed to process payout']);
         }
     }
