@@ -11,6 +11,6 @@ class Tag extends Model
 
     public function projects(): HasMany
     {
-        return $this->hasMany(Project::class);
+        return $this->hasMany(Work::class);
     }
 }

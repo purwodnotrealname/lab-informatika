@@ -22,17 +22,32 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Home</a>
+                        <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/about">About</a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="/register">Login</a>
+                        <a class="nav-link" href="/showcase">Showcase</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Account</a>
-                    </li>
+                    @if(auth()->user())
+                        <li class="nav-item">
+                            <a class="nav-link" href="/dashboard">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/topup">Top Up</a>
+                        </li>
+                        @if(auth()->user()->role == 'student')
+                            <li class="nav-item">
+                                <button disabled class="btn btn-outline-light">Credit: 0</button>
+                            </li>
+                        @endif
+                    @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">Login</a>
+                        </li>
+                    @endif
                 </ul>
             </div>
         </div>
@@ -53,11 +68,11 @@
                     </p>
                 </div>
             </div>
-    
+
             <!-- Form for Withdraw -->
             <form id="form" method="POST" enctype="multipart/form-data" action="{{ route('payment.payouts.create') }}">
                 @csrf
-    
+
                 <!-- Quick Select Dropdown -->
                 <div class="mt-2 text-start">
                     <label for="quick_amount" class="form-label">Pilih Jumlah</label>
@@ -70,16 +85,16 @@
                         <option value="manual">→ Masukkan jumlah manual</option> <!-- Manual Option -->
                     </select>
                 </div>
-    
+
                 <!-- Manual Amount Input (Hidden by Default) -->
                 <div id="manual_amount_container" class="mt-3 text-start d-none">
                     <label for="manual_amount" class="form-label">Jumlah Manual</label>
                     <input type="number" id="manual_amount" min="10000" placeholder="ex: 69000" class="form-control" />
                 </div>
-    
+
                 <!-- Final Hidden Input to Submit Selected Amount -->
                 <input type="hidden" name="amount" id="amount" />
-    
+
                 <!-- Submit Button -->
                 <div class="mt-4 text-center">
                     <button type="submit" class="btn btn-primary px-4 py-2 rounded-lg bg-sky-500 hover:bg-sky-600">
@@ -106,7 +121,7 @@
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
 
-    <script src="{{ asset('js/payout.js') }}"></script> 
+    <script src="{{ asset('js/payout.js') }}"></script>
 
 </body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
 

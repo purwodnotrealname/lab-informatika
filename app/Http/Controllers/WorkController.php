@@ -12,13 +12,19 @@ class WorkController extends Controller
 {
     public function create()
     {
+        $user = Auth::user();
+        if (!$user) {
+            return redirect('/')->with('error', 'Not Authorized.');
+        }
+
+
         $tags = Tag::all();
-        return view('projectcreation/projectadd', compact('tags'));
+        return view('projectcreation.projectadd', compact('tags'));
     }
     public function index()
     {
-        $projects = Work::all(); // <-- rename to match Blade
-        return view('showcase.showcase', compact('projects')); // <-- use compact for clarity
+        $projects = Work::with(['user', 'tag'])->get(); 
+        return view('showcase.showcase', compact('projects')); 
     }
 
     public function store(Request $request)
@@ -28,6 +34,7 @@ class WorkController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'credit' => 'nullable|string|max:255',
+            'price' => 'required|numeric|min:0',
             'video_link' => 'nullable|url',
             'demo_link' => 'nullable|url',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:8192',
@@ -52,16 +59,17 @@ class WorkController extends Controller
             ],
             'tag_id' => 'nullable|exists:tags,id'
         ]);
-    
+
         $work = new Work();
         $work->title = $request->title;
         $work->description = $request->description;
         $work->credit = $request->credit;
         $work->video_link = $request->video_link;
         $work->demo_link = $request->demo_link;
+        $work->price = $request->price;
         $work->user_id = Auth::id();
         $work->tag_id = $request->tag_id;
-    
+
         // Handle Image Upload
         if ($request->hasFile('image')) {
             $file = $request->file('image');
@@ -69,24 +77,61 @@ class WorkController extends Controller
             $file->storeAs('showcase/images', $filename, 'public');
             $work->image = $filename;
         }
-    
+
         // Handle Source Code Upload (.zip, .rar etc.)
         if ($request->hasFile('source')) {
             if ($request->file('source')->isValid()) {
-            $file = $request->file('source');
-            $filename = time() . '_' . $file->hashName();
-            $file->storeAs('showcase/source_code', $filename, 'public');
-            $work->source_code = $filename;
-        } else {
+                $file = $request->file('source');
+                $filename = time() . '_' . $file->hashName();
+                $file->storeAs('showcase/source_code', $filename, 'public');
+                $work->source_code = $filename;
+            } else {
                 // Log or display the specific error
                 $error = $request->file('source')->getErrorMessage();
                 return back()->with('error', 'File upload failed: ' . $error);
             }
         }
-    
+
         $work->save();
-    
-        return redirect('/showcase')->with('success', 'Project added successfully.');
+
+        return redirect()->back()->with('success', 'Project added successfully.');
+    }
+    public function update($id, Request $request)
+    {
+        $work = Work::find($id);
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->hashName();
+            $file->storeAs('showcase/images', $filename, 'public');
+            $work->image = $filename;
+        }
+
+        // Handle Source Code Upload (.zip, .rar etc.)
+        if ($request->hasFile('source')) {
+            if ($request->file('source')->isValid()) {
+                $file = $request->file('source');
+                $filename = time() . '_' . $file->hashName();
+                $file->storeAs('showcase/source_code', $filename, 'public');
+                $work->source_code = $filename;
+            } else {
+                // Log or display the specific error
+                $error = $request->file('source')->getErrorMessage();
+                return back()->with('error', 'File upload failed: ' . $error);
+            }
+        }
+
+        $work->title = $request->title;
+        $work->description = $request->description;
+        $work->credit = $request->credit;
+        $work->video_link = $request->video_link;
+        $work->demo_link = $request->demo_link;
+        $work->user_id = Auth::id();
+        $work->tag_id = $request->tag_id;
+
+
+        $work->save();
+        return redirect()->back()->with('success', 'Project updated successfully.');
     }
     public function destroy($id)
     {

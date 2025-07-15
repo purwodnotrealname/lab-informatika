@@ -7,20 +7,19 @@ use App\Http\Controllers\UserDashboard;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\Request;
 use App\Http\Controllers\ShowcaseController;
 use App\Http\Controllers\WorkController;
-use App\Http\Controllers\AboutController;
-use Illuminate\Support\Facades\File;
 use App\Http\Controllers\XenditController;
-use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Middleware\IsAdmin;
+use App\Http\Controllers\PurchaseController;
 
 
 Route::get('/project-image/{filename}', function ($filename) {
-    $path = "showcase/" . $filename;
+    $path = "showcase/images/" . $filename;
 
     if (!Storage::disk('public')->exists($path)) {
+        logger()->error("File not found: " . $path);
         $path = "project/timeout.jpg";
     }
 
@@ -29,7 +28,7 @@ Route::get('/project-image/{filename}', function ($filename) {
 
 // page routes
 Route::get('/', function () {
-    return view('landing/welcome');
+    return view('landing.welcome');
 });
 
 Route::controller(AuthController::class)->group(function () {
@@ -44,11 +43,20 @@ Route::controller(LoginController::class)->group(function () {
 });
 
 Route::controller(ForgotPasswordController::class)->group(function () {
-    Route::get('/forgot-password',  'showForgetPasswordForm')->name('password.request');
-    Route::post('/forgot-password','submitForgetPasswordForm')->name('password.email');
+    Route::get('/forgot-password', 'showForgetPasswordForm')->name('password.request');
+    Route::post('/forgot-password', 'submitForgetPasswordForm')->name('password.email');
     Route::get('/reset-password', 'showResetPasswordForm')->name('password.reset');
-    Route::post('/reset-password','submitResetPasswordForm')->name('password.update');
+    Route::post('/reset-password', 'submitResetPasswordForm')->name('password.update');
 });
+
+Route::controller(PurchaseController::class)->group(function () {
+    Route::get('/check-purchase/{project_id}', 'checkPurchaseStatus')->name('checkPurchaseStatus');
+    Route::get('/download-project/{project_id}', 'downloadProject')->name('downloadProject');
+    Route::post('/purchase-project', 'purchaseProject')->name('purchase.project');
+    Route::get('/get-project-price/{project_id}', 'getProjectPrice')->name('getProjectPrice');
+    Route::get('/get-current-balance', 'getCurrentBalance')->name('getCurrentBalance');
+
+})->middleware('auth');
 
 // Show form to request reset
 Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('password.request');
@@ -77,15 +85,24 @@ Route::get('/account', function () {
     return view('dashboard.dashboard');
 });
 
-Route::get('/user', [UserDashboard::class, 'index']);
+Route::get('/user', [UserDashboard::class, 'index'])->middleware('auth');
 
-Route::get('/admin', [AdminController::class, 'index'])->name('admin.work');
-Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
+Route::get('/dashboard', function () {
+    if (auth()->user()->role == 'student') {
+        return redirect('/user');
+    } else {
+        return redirect('/admin');
+    }
+})->middleware('auth');
 
-// project creation
+Route::middleware(['auth', IsAdmin::class])->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.work');
+    Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
+});
 
 Route::get('/project/add', [WorkController::class, 'create'])->name('project.create');
 Route::post('/project/store', [WorkController::class, 'store'])->name('project.store');
+Route::post('/project/update/{id}', [WorkController::class, 'update'])->name('project.update');
 Route::delete('/project/destroy/{id}', [WorkController::class, 'destroy'])->name('project.delete');
 
 Route::controller(UserController::class)->group(function () {
@@ -98,4 +115,4 @@ Route::controller(XenditController::class)->group(function () {
     Route::get('/topup/webhook', 'handleWebhook')->name('submit.payment');
     Route::get('/payout', 'payoutsView')->name('payouts.view');
     Route::post('/payout/create', 'submitPayouts')->name('payment.payouts.create');
-});
+})->middleware('auth');

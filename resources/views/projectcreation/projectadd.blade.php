@@ -16,7 +16,7 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Home</a>
+                        <a class="nav-link active" href="/">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Features</a>
@@ -70,6 +70,11 @@
             <div class="mb-3">
                 <label for="demo_link" class="form-label">Demo Link</label>
                 <input type="url" class="form-control" name="demo_link">
+            </div>
+
+            <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" class="form-control" name="price" min="0" required>
             </div>
 
             <div class="mb-3">

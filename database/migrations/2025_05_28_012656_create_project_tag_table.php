@@ -3,11 +3,10 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Project;
+use App\Models\Work;
 use App\Models\Tag;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('project_tag', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Project::class)->constrained('projects', 'id')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(Work::class)->constrained('works', 'id')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(Tag::class)->constrained('tags', 'id')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });

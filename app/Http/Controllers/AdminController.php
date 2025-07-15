@@ -16,7 +16,8 @@ class AdminController extends Controller
     }
     public function users()
     {
-        $users = User::with('student')->get();
+        $users = User::with('student')->where('role', '=', 'student')->get();
+        // dd($users[6]->student->name);
         return view('dashboard.usercontroller')->with('users', $users);
     }
 }

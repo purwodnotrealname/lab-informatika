@@ -39,8 +39,6 @@
                             <i class="fas fa-user-circle mr-1"></i>{{ auth()->user()->username }}
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#"><i class="fas fa-user mr-2"></i>Profile</a>
-                            <a class="dropdown-item" href="#"><i class="fas fa-cog mr-2"></i>Settings</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ route('attemptlogout') }}"><i
                                     class="fas fa-sign-out-alt mr-2"></i>Logout</a>
