@@ -22,18 +22,21 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Home</a>
+                        <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/about">About</a>
+                        <a class="nav-link active" href="/about">About</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/showcase">Account</a>
+                        <a class="nav-link" href="/showcase">Showcase</a>
                     </li>
                     @if(auth()->user())
                         <li class="nav-item">
                             <a class="nav-link" href="/dashboard">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/topup">Top Up</a>
                         </li>
                         @if(auth()->user()->role == 'student')
                             <li class="nav-item">
@@ -57,9 +60,10 @@
                 <div class="col-md-8 text-center">
                     <h1 class="display-4">Top Up</h1>
                     <p class="lead">Top Up balance to your account</p>
-                    <p class="lead">Jumlah Saldo akun anda: @if($balance)
-                        {{ $balance->amount }}
-                    @else
+                    <p class="lead">Jumlah Saldo akun anda:
+                        @if($balance)
+                            {{ $balance->amount }}
+                        @else
                             0
                         @endif
                     </p>

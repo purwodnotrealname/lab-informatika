@@ -21,18 +21,21 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Home</a>
+                        <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/about">About</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link active" href="/showcase">Account</a>
+                        <a class="nav-link active" href="/showcase">Showcase</a>
                     </li>
                     @if(auth()->user())
                         <li class="nav-item">
                             <a class="nav-link" href="/dashboard">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/topup">Top Up</a>
                         </li>
                         @if(auth()->user()->role == 'student')
                             <li class="nav-item">
@@ -231,16 +234,6 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4 mx-auto mb-4 mb-lg-0">
-                    <h5 class="text-white mb-4">Tautan Cepat</h5>
-                    <ul class="list-unstyled">
-                        <li class="mbl-2"><a href="#" class="text-white-50">Tentang Kami</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50">Proyek Penelitian</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50">Publikasi</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50">Bergabung dengan Kami</a></li>
-                        <li><a href="#" class="text-white-50">Kontak</a></li>
-                    </ul>
-                </div>
                 <hr class="bg-light mt-5 mb-4">
 
             </div>

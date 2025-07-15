@@ -22,18 +22,21 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Home</a>
+                        <a class="nav-link active" href="/">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/about">About</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/showcase">Account</a>
+                        <a class="nav-link" href="/showcase">Showcase</a>
                     </li>
                     @if(auth()->user())
                         <li class="nav-item">
                             <a class="nav-link" href="/dashboard">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/topup">Top Up</a>
                         </li>
                         @if(auth()->user()->role == 'student')
                             <li class="nav-item">
