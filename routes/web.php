@@ -112,7 +112,7 @@ Route::controller(UserController::class)->group(function () {
 Route::controller(XenditController::class)->group(function () {
     Route::get('/topup', 'viewTopup')->name('topup.view');
     Route::post('/topup/create', 'createPaymentRequest')->name('payment.create');
-    Route::get('/topup/webhook', 'handleWebhook')->name('submit.payment');
+    Route::post('/topup/webhook', 'handleWebhook')->name('submit.payment');
     Route::get('/payout', 'payoutsView')->name('payouts.view');
     Route::post('/payout/create', 'submitPayouts')->name('payment.payouts.create');
 })->middleware('auth');

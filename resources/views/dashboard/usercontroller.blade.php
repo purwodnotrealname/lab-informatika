@@ -118,7 +118,6 @@
                                             <td scope="col">{{ $user->student->name }}</td>
                                             <td scope="col">{{ $user->email }}</td>
                                             <td scope="col">{{ $user->student->nim }}</td>
-                                            <td scope="col">{{ $user->student->year }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

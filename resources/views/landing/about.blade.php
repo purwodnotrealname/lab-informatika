@@ -40,7 +40,8 @@
                         </li>
                         @if(auth()->user()->role == 'student')
                             <li class="nav-item">
-                                <button disabled class="btn btn-outline-light">Credit: 0</button>
+                                <button disabled class="btn btn-outline-light">Credit:
+                                    {{ auth()->user()->balance->amount ?? 0 }}</button>
                             </li>
                         @endif
                     @else

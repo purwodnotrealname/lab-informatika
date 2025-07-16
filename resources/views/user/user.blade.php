@@ -70,11 +70,14 @@
                     <div>Active Projects</div>
                 </div>
                 <div class="col-md-3 stat-item">
-                    <div class="stat-number">Rp.{{ $user->balance->amount }}</div>
+                    <div class="stat-number">Rp.{{ $user->balance->amount ?? 0 }}</div>
                     <div>Credit Amount</div>
                 </div>
                 <div>
                     <a href="/topup" class="btn btn-light">Top up</a>
+                </div>
+                <div>
+                    <a href="/payout" class="btn btn-light ml-4">Withdraw</a>
                 </div>
             </div>
         </div>
